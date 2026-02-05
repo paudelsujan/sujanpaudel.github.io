@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Milaa ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: #ffdde1; 
+            background-image: linear-gradient(0deg, #ffdde1 0%, #ee9ca7 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Hearts Background */
+        .bg-heart {
+            position: absolute;
+            bottom: -100px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 2rem;
+            animation: float 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+
+        /* Main Card */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-width: 90%;
+            position: relative;
+            backdrop-filter: blur(5px);
+            border: 2px solid #fff;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: #d63384;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Yes Button - Heart Shapeish */
+        .btn-yes {
+            background-color: #ff4757;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+        
+        .btn-yes:hover {
+            transform: scale(1.1);
+            background-color: #ff6b81;
+        }
+
+        /* No Button - Broken Heart Vibe */
+        .btn-no {
+            background-color: #2f3542;
+            color: white;
+            box-shadow: 0 5px 15px rgba(47, 53, 66, 0.4);
+            position: relative; /* Default position */
+        }
+
+        /* Success Message (Hidden by default) */
+        .success-message {
+            display: none;
+            text-align: center;
+        }
+        
+        .success-message img {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="bg-hearts"></div>
+
+    <div class="container">
+        <div id="question-box">
+            <h1>Hi Milaa!! <br> Will you be my valentine?</h1>
+            <div class="buttons">
+                <button class="btn-yes" onclick="sheSaidYes()">
+                    ❤️ YES
+                </button>
+                <button class="btn-no" id="noBtn" onmouseover="flee()">
+                    💔 NO
+                </button>
+            </div>
+        </div>
+
+        <div class="success-message" id="success-msg">
+            <h1>Yay! I love you! ❤️</h1>
+            <p>See you on date night!</p>
+            <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Love Bear">
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Flee Logic
+        function flee() {
+            // Calculate random positions within viewport
+            // Subtract button size to ensure it doesn't go off screen
+            const newX = Math.random() * (width - noBtn.offsetWidth - 50); 
+            const newY = Math.random() * (height - noBtn.offsetHeight - 50);
+
+            // Apply absolute position to move it anywhere on body
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+        }
+
+        // Success Logic
+        function sheSaidYes() {
+            document.getElementById('question-box').style.display = 'none';
+            document.getElementById('success-msg').style.display = 'block';
+            
+            // Launch confetti effect (simple heart burst)
+            createHearts(50);
+        }
+
+        // Background Heart Generator
+        function createHearts(count) {
+            const body = document.querySelector('body');
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('bg-heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                body.appendChild(heart);
+                
+                // Remove heart after animation to keep DOM clean
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+        }
+
+        // Start background hearts
+        setInterval(() => createHearts(3), 500);
+
+    </script>
+</body>
+</html>
